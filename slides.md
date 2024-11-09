@@ -1,5 +1,5 @@
 ---
-colorSchema: light
+colorSchema: dark
 ---
 
 # Anatomia de um Component
@@ -1772,6 +1772,214 @@ export class UserComponent {
 
   showFramework() {
     alert(this.favoriteFramework);
+  }
+}
+```
+````
+
+---
+
+# Reactive Forms
+
+Quando usar?
+
+> Quando desejarmos controlar o formulário por programação em vez de entregar o controle para o template.
+
+---
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <form>
+      <label>Name <input type="text" /></label>
+      <label>Email <input type="email" /></label>
+      <button type="submit">Submit</button>
+    </form>
+  `
+})
+export class AppComponent {}
+```
+
+```ts
+import {ReactiveFormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <form>
+      <label>Name <input type="text" /></label>
+      <label>Email <input type="email" /></label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup} from '@angular/forms';
+
+@Component({
+  template: `
+    <form>
+      <label>Name <input type="text" /></label>
+      <label>Email <input type="email" /></label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({});
+}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
+
+@Component({
+  template: `
+    <form>
+      <label>Name <input type="text" /></label>
+      <label>Email <input type="email" /></label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl('')
+  });
+}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <label>Name <input type="text" /></label>
+      <label>Email <input type="email" /></label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl('')
+  });
+}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <label>Name <input type="text" formControlName="name" /></label>
+      <label>Email <input type="email" formControlName="email" /></label>
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl('')
+  });
+}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <label>Name <input type="text" formControlName="name" /></label>
+      <label>Email <input type="email" formControlName="email" /></label>
+      <button type="submit">Submit</button>
+
+      <h2>Profile Form</h2>
+      <p>Name: {{ profileForm.value.name }}</p>
+      <p>Email: {{ profileForm.value.email }}</p>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl('')
+  });
+}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+      <label>Name <input type="text" formControlName="name" /></label>
+      <label>Email <input type="email" formControlName="email" /></label>
+      <button type="submit">Submit</button>
+
+      <h2>Profile Form</h2>
+      <p>Name: {{ profileForm.value.name }}</p>
+      <p>Email: {{ profileForm.value.email }}</p>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl('')
+  });
+
+  handleSubmit() {}
+}
+```
+
+```ts
+import {ReactiveFormsModule, FormGroup, FormControl} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+      <label>Name <input type="text" formControlName="name" /></label>
+      <label>Email <input type="email" formControlName="email" /></label>
+      <button type="submit">Submit</button>
+
+      <h2>Profile Form</h2>
+      <p>Name: {{ profileForm.value.name }}</p>
+      <p>Email: {{ profileForm.value.email }}</p>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl('')
+  });
+
+  handleSubmit() {
+    alert(this.profileForm.value.name + ' | ' + this.profileForm.value.email);
   }
 }
 ```
