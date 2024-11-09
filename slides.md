@@ -1186,3 +1186,262 @@ export class UserComponent {
 }
 ```
 ````
+
+---
+
+# Enabling Routing
+
+A maioria dos apps vão exigir navegarmos por mais de 1 single page. Para possibilitar isso,
+precisamos do recurso de **Routing**.
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <nav>
+      <a href="/">Home</a> | <a href="/user">User</a>
+    </nav>
+  `
+})
+export class AppComponent {}
+```
+
+```ts
+// Crie arquivo chamado app.routes.ts. Conteudo abaixo.
+```
+
+```ts
+// Crie arquivo chamado app.routes.ts. Conteudo abaixo.
+export const routes: Routes = [];
+```
+
+```ts
+// Crie arquivo chamado app.routes.ts. Conteudo abaixo.
+import {Routes} from '@angular/router';
+
+export const routes: Routes = [];
+```
+
+```ts
+// Crie arquivo chamado app.config.ts. Conteudo abaixo.
+export const appConfig: ApplicationConfig = {
+  providers: [],
+};
+```
+
+```ts
+// Crie arquivo chamado app.config.ts. Conteudo abaixo.
+import { ApplicationConfig } from '@angular/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [],
+};
+```
+
+```ts
+// Crie arquivo chamado app.config.ts. Conteudo abaixo.
+import { ApplicationConfig } from '@angular/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)],
+};
+```
+
+```ts
+// Crie arquivo chamado app.config.ts. Conteudo abaixo.
+import { ApplicationConfig } from '@angular/core';
+import { routes } from './app.routes';
+import { provideRouter } from '@angular/router';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)],
+};
+```
+
+```ts
+// File app.component.ts
+
+@Component({
+  template: `
+    <nav>
+      <a href="/">Home</a> | <a href="/user">User</a>
+    </nav>
+  `
+})
+export class AppComponent {}
+```
+
+```ts
+// File app.component.ts
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  template: `
+    <nav>
+      <a href="/">Home</a> | <a href="/user">User</a>
+    </nav>
+  `,
+  imports: [RouterOutlet],
+})
+export class AppComponent {}
+```
+
+```ts
+// File app.component.ts
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  template: `
+    <nav>
+      <a href="/">Home</a> | <a href="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet],
+})
+export class AppComponent {}
+```
+````
+
+---
+
+## Definindo uma Rota
+
+- Continuando a implementação anterior onde só habilitamos o Routing. Precisamos definir as rotas.
+- Lembrando:
+  - `/` : aponta para path `''` que carrega `HomeComponent`
+  - `/user`: aponta para path `"user"` que carrega `UserComponent`
+
+````md magic-move
+```ts
+// file app/home.component.ts
+@Component({})
+export class HomeComponent {}
+```
+
+```ts
+// file app/home.component.ts
+@Component({})
+export class HomeComponent {}
+
+// file app/user.component.ts
+@Component({})
+export class UserComponent {}
+```
+
+```ts
+// file app/home.component.ts
+@Component({
+  selector: 'app-home',
+  template: `
+    <div>App Home Page</div>
+  `
+})
+export class HomeComponent {}
+
+// file app/user.component.ts
+@Component({
+  selector: 'app-user',
+  template: `
+    <div>App User Page</div>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+// file app.routes.ts.
+import {Routes} from '@angular/router';
+
+export const routes: Routes = [];
+```
+
+```ts
+// file app.routes.ts.
+import {Routes} from '@angular/router';
+
+export const routes: Routes = [
+  {
+    path: '', // aponta para / no browser
+    component: HomeComponent
+  }
+];
+```
+
+```ts
+// file app.routes.ts.
+import {Routes} from '@angular/router';
+import {HomeComponent} from './home.component';
+
+export const routes: Routes = [
+  {
+    path: '', // aponta para / no browser
+    component: HomeComponent
+  }
+];
+```
+
+```ts
+// file app.routes.ts.
+import {Routes} from '@angular/router';
+import {HomeComponent} from './home.component';
+
+export const routes: Routes = [
+  {
+    path: '', // aponta para / no browser
+    component: HomeComponent
+  },
+  {
+    path: 'user', // aponta para /user no browser
+    component: UserComponent
+  }
+];
+```
+
+```ts
+// file app.routes.ts.
+import {Routes} from '@angular/router';
+import {HomeComponent} from './home.component';
+import {UserComponent} from './user.component';
+
+export const routes: Routes = [
+  {
+    path: '', // aponta para / no browser
+    component: HomeComponent
+  },
+  {
+    path: 'user', // aponta para /user no browser
+    component: UserComponent
+  }
+];
+```
+
+```ts
+// file app.routes.ts.
+import {Routes} from '@angular/router';
+import {HomeComponent} from './home.component';
+import {UserComponent} from './user.component';
+
+export const routes: Routes = [
+  {
+    path: '', // aponta para / no browser,
+    title: 'App Home Page',
+    component: HomeComponent
+  },
+  {
+    path: 'user', // aponta para /user no browser
+    title: 'App User Page',
+    component: UserComponent
+  }
+];
+```
+````
+
+---
+
+## Linkar uma Rota com RouterLink
