@@ -1445,3 +1445,78 @@ export const routes: Routes = [
 ---
 
 ## Linkar uma Rota com RouterLink
+
+O código atual tem um grave problema: **a página carrega inteiramente ao clicar nos links de navegação**. A solução é o uso da diretiva `RouterLink` que fornece o atributo `routerLink` para ser usado no lugar de `href`.
+
+Pontos negativos desse recarregamento: **Redownload de assets** e **Recálculos** (pior para grandes páginas).
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+  `
+})
+export class AppComponent {}
+```
+
+```ts
+import {RouterOutlet} from '@angular/router';
+
+@Component({
+  template: `
+    <nav>
+      <a href="/">Home</a>
+      |
+      <a href="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet]
+})
+export class AppComponent {}
+```
+
+```ts
+import {RouterOutlet} from '@angular/router';
+
+@Component({
+  template: `
+    <nav>
+      <a routerLink="/">Home</a>
+      |
+      <a routerLink="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet]
+})
+export class AppComponent {}
+```
+
+```ts
+import {RouterOutlet, RouterLink} from '@angular/router';
+
+@Component({
+  template: `
+    <nav>
+      <a routerLink="/">Home</a>
+      |
+      <a routerLink="/user">User</a>
+    </nav>
+    <router-outlet />
+  `,
+  imports: [RouterOutlet, RouterLink]
+})
+export class AppComponent {}
+```
+````
