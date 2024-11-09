@@ -1520,3 +1520,259 @@ import {RouterOutlet, RouterLink} from '@angular/router';
 export class AppComponent {}
 ```
 ````
+
+---
+
+# Visão Geral dos Forms
+
+Angular oferece 2 tipos de forms: **Template-driven** (será adotada neste exemplo) e **Reactive**.
+
+- `[()]`: chamado de **banana in a box**. Esta sintaxe representa **two-way binding**
+  - `()`: event binding
+  - `[]`: property binding
+
+````md magic-move
+```ts
+@Component({})
+export class UserComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+    </label>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+      <input type="text" />
+    </label>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+      <input type="text" () />
+    </label>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+      <input type="text" [()] />
+    </label>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+      <input type="text" [(ngModel)] />
+    </label>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+      <input type="text" [(ngModel)]="favoriteFramework" />
+    </label>
+  `
+})
+export class UserComponent {}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <label>
+      Favorite Framework:
+      <input type="text" [(ngModel)]="favoriteFramework" />
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <p>Favorite: {{ favoriteFramework }}</p>
+    <label>
+      Favorite Framework:
+      <input type="text" [(ngModel)]="favoriteFramework" />
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <p>Favorite: {{ favoriteFramework }}</p>
+    <label>
+      Favorite Framework:
+      <input type="text" [(ngModel)]="favoriteFramework" />
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <p>Favorite: {{ favoriteFramework }}</p>
+    <label for="framework">
+      Favorite Framework:
+      <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+}
+```
+````
+
+---
+
+## Obtendo form control value
+
+````md magic-move
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <label for="framework">
+      Favorite Framework:
+      <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <label for="framework">
+      Favorite Framework:
+      <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+      <button>Show Framework</button>
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <label for="framework">
+      Favorite Framework:
+      <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+      <button (click)="showFramework()">Show Framework</button>
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <label for="framework">
+      Favorite Framework:
+      <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+      <button (click)="showFramework()">Show Framework</button>
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+
+  showFramework() {}
+}
+```
+
+```ts
+import {FormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <label for="framework">
+      Favorite Framework:
+      <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+      <button (click)="showFramework()">Show Framework</button>
+    </label>
+  `,
+  imports: [FormsModule]
+})
+export class UserComponent {
+  favoriteFramework = '';
+
+  showFramework() {
+    alert(this.favoriteFramework);
+  }
+}
+```
+````
