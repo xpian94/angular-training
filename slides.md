@@ -2467,6 +2467,8 @@ export class CarService {
 
 ## DI do tipo **Constructor-based**
 
+Existe uma pequena diferença desta abordagem para a anterior. Será abordada num outro momento.
+
 ````md magic-move
 ```ts
 @Component({})
@@ -2562,6 +2564,451 @@ export class CarService {
 
   getCars(): string[] {
     return this.cars;
+  }
+}
+```
+````
+
+---
+
+# Pipes
+
+- **Pipes**: são **funções** usadas para transformar dados dentro de **templates**
+- **Costumam ser funções puras**: isto é, pipes não geram efeitos colaterais
+- **Angular** fornece várias **built-in pipes**
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `{{ username }}`
+})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `{{ username }}`
+})
+export class AppComponent {
+  username = 'youngtech';
+}
+```
+
+```ts
+@Component({
+  template: `{{ username | uppercase }}`
+})
+export class AppComponent {
+  username = 'youngtech';
+}
+```
+
+```ts
+@Component({
+  template: `{{ username | uppercase }}`,
+  imports: [UpperCasePipe]
+})
+export class AppComponent {
+  username = 'youngtech';
+}
+```
+
+```ts
+import {UpperCasePipe} from '@angular/common';
+
+@Component({
+  template: `{{ username | uppercase }}`,
+  imports: [UpperCasePipe]
+})
+export class AppComponent {
+  username = 'youngtech';
+}
+```
+````
+
+---
+
+## Formatando dados com Pipes
+
+Podemos passar opções de configuração nos pipes. São conhecidos como **Pipe Parameters**.
+
+> Exemplo de **Pipe Parameter**: `number: '3.2-2'`
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num }}</li>
+    </ul>
+  `
+})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num }}</li>
+    </ul>
+  `
+})
+export class AppComponent {
+  num = 103.1234;
+}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num }}</li>
+      <li>Date with "date" {{ birthday }}</li>
+    </ul>
+  `
+})
+export class AppComponent {
+  num = 103.1234;
+}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num }}</li>
+      <li>Date with "date" {{ birthday }}</li>
+    </ul>
+  `
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num }}</li>
+      <li>Date with "date" {{ birthday }}</li>
+      <li>Currency with "currency" {{ cost }}</li>
+    </ul>
+  `
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num }}</li>
+      <li>Date with "date" {{ birthday }}</li>
+      <li>Currency with "currency" {{ cost }}</li>
+    </ul>
+  `
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+
+```ts
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number : '3.2-2' }}</li>
+      <li>Date with "date" {{ birthday }}</li>
+      <li>Currency with "currency" {{ cost }}</li>
+    </ul>
+  `
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+
+```ts
+import {DecimalPipe} from '@angular/common';
+
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number : '3.2-2' }}</li>
+      <li>Date with "date" {{ birthday }}</li>
+      <li>Currency with "currency" {{ cost }}</li>
+    </ul>
+  `,
+  imports: [DecimalPipe]
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+
+```ts
+import {DecimalPipe} from '@angular/common';
+
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number : '3.2-2' }}</li>
+      <li>Date with "date" {{ birthday | date : 'medium' }}</li>
+      <li>Currency with "currency" {{ cost }}</li>
+    </ul>
+  `,
+  imports: [DecimalPipe]
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+
+```ts
+import {DecimalPipe, DatePipe} from '@angular/common';
+
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number : '3.2-2' }}</li>
+      <li>Date with "date" {{ birthday | date : 'medium' }}</li>
+      <li>Currency with "currency" {{ cost }}</li>
+    </ul>
+  `,
+  imports: [DecimalPipe, DatePipe]
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+
+```ts
+import {DecimalPipe, DatePipe} from '@angular/common';
+
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number : '3.2-2' }}</li>
+      <li>Date with "date" {{ birthday | date : 'medium' }}</li>
+      <li>Currency with "currency" {{ cost | currency }}</li>
+    </ul>
+  `,
+  imports: [DecimalPipe, DatePipe]
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+
+```ts
+import {DecimalPipe, DatePipe, CurrencyPipe} from '@angular/common';
+
+@Component({
+  template: `
+    <ul>
+      <li>Number with "decimal" {{ num | number : '3.2-2' }}</li>
+      <li>Date with "date" {{ birthday | date : 'medium' }}</li>
+      <li>Currency with "currency" {{ cost | currency }}</li>
+    </ul>
+  `,
+  imports: [DecimalPipe, DatePipe, CurrencyPipe]
+})
+export class AppComponent {
+  num = 103.1234;
+  birthday = new Date(2023, 3, 2);
+  cost = 4560.34;
+}
+```
+````
+
+---
+
+## Criando um Pipe (com decorator `@Pipe`)
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+export class ReversePipe {}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+import {PipeTransform} from '@angular/core';
+
+export class ReversePipe implements PipeTransform {}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+import {PipeTransform} from '@angular/core';
+
+export class ReversePipe implements PipeTransform {
+  transform(value: string): string {}
+}
+```
+
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+import {PipeTransform} from '@angular/core';
+
+export class ReversePipe implements PipeTransform {
+  transform(value: string): string {
+    return '';
+  }
+}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+import {PipeTransform} from '@angular/core';
+
+export class ReversePipe implements PipeTransform {
+  transform(value: string): string {
+    let reverse = '';
+
+    for (let i = value.length; i >= 0; i--) reverse += value[i];
+
+    return reverse;
+  }
+}
+```
+
+```ts
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+import {PipeTransform, Pipe} from '@angular/core';
+
+@Pipe({
+  name: 'reverse'
+})
+export class ReversePipe implements PipeTransform {
+  transform(value: string): string {
+    let reverse = '';
+
+    for (let i = value.length; i >= 0; i--) reverse += value[i];
+
+    return reverse;
+  }
+}
+```
+
+```ts
+import {ReversePipe} from './reverse.pipe';
+
+@Component({
+  template: `Reverse Machine: {{ word | reverse }}`,
+  imports: [ReversePipe]
+})
+export class AppComponent {
+  word = 'You are a champion'
+}
+
+// file reverse.pipe.ts
+import {PipeTransform, Pipe} from '@angular/core';
+
+@Pipe({
+  name: 'reverse'
+})
+export class ReversePipe implements PipeTransform {
+  transform(value: string): string {
+    let reverse = '';
+
+    for (let i = value.length; i >= 0; i--) reverse += value[i];
+
+    return reverse;
   }
 }
 ```
