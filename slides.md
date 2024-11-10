@@ -1,5 +1,5 @@
 ---
-colorSchema: dark
+colorSchema: light
 ---
 
 # Anatomia de um Component
@@ -1981,6 +1981,216 @@ export class AppComponent {
   handleSubmit() {
     alert(this.profileForm.value.name + ' | ' + this.profileForm.value.email);
   }
+}
+```
+````
+
+---
+
+## Validando Forms
+
+Vamos ver o botão de **Submit** sendo habilitado quando os campos estiverem válidos.
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `
+    <form>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `
+})
+export class AppComponent {}
+```
+
+```ts
+import {FormGroup} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `
+})
+export class AppComponent {
+  profileForm = new FormGroup({});
+}
+```
+
+```ts
+import {FormGroup} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl(''),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', []),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required]),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit" [disabled]="">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
+}
+```
+
+```ts
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+
+@Component({
+  template: `
+    <form [formGroup]="profileForm">
+      <input type="text" name="name" formControlName="name" />
+      <input type="email" name="email" formControlName="email" />
+      <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </form>
+  `,
+  imports: [ReactiveFormsModule]
+})
+export class AppComponent {
+  profileForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
 }
 ```
 ````
