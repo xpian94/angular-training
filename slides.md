@@ -2194,3 +2194,271 @@ export class AppComponent {
 }
 ```
 ````
+
+---
+
+# Criando um Serviço Injetável
+
+**Dependency Injection (DI)** no Angular é um dos recursos mais importantes.
+
+- **DI no Angular**: permite ao Angular fornecer recursos necessários para a app em runtime;
+- **Dependency**: pode ser um **service** ou **outros recursos**.
+- Casos comuns:
+  - **Service**: pode atuar como forma de interação com dados e APIs
+
+> Decorator `@Injectable`: permite tornar um **Service** elegível para ser injetado pelo sistema de DI. Notifica ao **DI system** de que está disponibilizando uma classe para ser requisitada por uma outra classe. `providedIn: 'root'` diz que `CarService` está disponível por toda a aplicação.
+
+---
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `<p> {{ carService.getCars() }} </p>`
+})
+export class AppComponent {}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p> {{ carService.getCars() }} </p>`
+})
+export class AppComponent {
+  carService = inject(CarService);
+}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p> {{ carService.getCars() }} </p>`
+})
+export class AppComponent {
+  carService = inject(CarService);
+}
+
+// file car.service.ts
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p> {{ carService.getCars() }} </p>`
+})
+export class AppComponent {
+  carService = inject(CarService);
+}
+
+// file car.service.ts
+import {Injectable} from '@angular/core';
+
+@Injectable({})
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p> {{ carService.getCars() }} </p>`
+})
+export class AppComponent {
+  carService = inject(CarService);
+}
+
+// file car.service.ts
+import {Injectable} from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+````
+
+---
+
+## DI do tipo **Inject-based**
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+
+  constructor() {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+  carService = inject(CarService);
+
+  constructor() {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+```
+
+```ts
+import {inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+  carService = inject(CarService);
+
+  constructor() {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+```
+
+```ts
+import {inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+  carService = inject(CarService);
+
+  constructor() {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+
+// file car.service.ts
+export class CarService {}
+```
+
+```ts
+import {inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+  carService = inject(CarService);
+
+  constructor() {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+
+// file car.service.ts
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One']
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+
+```ts
+import {inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent { /* ... */ }
+
+// file car.service.ts
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One']
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+
+```ts
+import {inject} from '@angular/core';
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent { /* ... */ }
+
+// file car.service.ts
+import {Injectable} from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One']
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+````
