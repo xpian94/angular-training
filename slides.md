@@ -2462,3 +2462,107 @@ export class CarService {
 }
 ```
 ````
+
+---
+
+## DI do tipo **Constructor-based**
+
+````md magic-move
+```ts
+@Component({})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+}
+```
+
+```ts
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+
+  constructor(private carService: CarService) {}
+}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+
+  constructor(private carService: CarService) {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+
+  constructor(private carService: CarService) {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+
+// file car.service.ts
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+
+```ts
+import {CarService} from './car.service';
+
+@Component({
+  template: `<p>Car Listing: {{ display }}</p>`
+})
+export class AppComponent {
+  display = '';
+
+  constructor(private carService: CarService) {
+    this.display = this.carService.getCars().join(' ⭐️ ');
+  }
+}
+
+// file car.service.ts
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+  cars = ['Sunflower GT', 'Flexus Sport', 'Sprout Mach One'];
+
+  getCars(): string[] {
+    return this.cars;
+  }
+}
+```
+````
