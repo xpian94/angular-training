@@ -2,6 +2,10 @@
 colorSchema: light
 ---
 
+<Toc />
+
+---
+
 # Anatomia de um Component
 
 Component é um building block fundamental do Angular. Composto de 3 partes:
